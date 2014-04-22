@@ -111,6 +111,20 @@ function cdh()
 }
 
 
+cdhi()
+{
+    cdh
+    echo -n "> "
+    read
+    [[ -n $REPLY ]] && cdh "$REPLY"
+}
+
+cdhp()
+{
+    DIRECTORY_HISTORY_DIRS=()
+    DIRECTORY_HISTORY_TIMES=()
+    __dir_history_add --init
+}
 
 # ----------------------------------------------------------------------------
 # Debug info for directory history
@@ -144,3 +158,4 @@ __complete_cdh()
 }
 
 complete -F __complete_cdh cdh
+cdhp
