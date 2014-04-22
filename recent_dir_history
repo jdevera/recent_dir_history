@@ -31,8 +31,17 @@ DIRECTORY_HISTORY_ENTRIES="${DIRECTORY_HISTORY_ENTRIES:-30}"
 
 function __dir_history_add()
 {
-    local old_dir="$1"
     local new_dir="$(pwd)"
+
+    if [[ $1 == '--init' ]]; then
+        if [[ ${#DIRECTORY_HISTORY_DIRS[@]} == 0 ]]; then
+            DIRECTORY_HISTORY_DIRS=( "$(readlink -f $new_dir)" )
+            DIRECTORY_HISTORY_TIMES=( "$(date -u +'%Y-%m-%d %H:%M:%S %Z')" )
+        fi
+        return 0
+    fi
+
+    local old_dir="$1"
 
     # No change, no entry
     [[ $old_dir == $new_dir ]] && return 0
