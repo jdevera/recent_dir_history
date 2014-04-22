@@ -132,3 +132,15 @@ cdh-dbg()
     done
     
 }
+
+__complete_cdh()
+{
+    local len="${#DIRECTORY_HISTORY_DIRS[@]}"
+    COMPREPLY=()
+
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $(compgen -W "$(seq 1 $len)" -- $cur ) )
+    return 0
+}
+
+complete -F __complete_cdh cdh
